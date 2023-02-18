@@ -19,7 +19,7 @@ public class ConnectionServiceImpl implements ConnectionService {
     @Autowired
     ConnectionRepository connectionRepository2;
 
-
+    @Override
     public User connect(int userId, String countryName) throws Exception{
         User user = userRepository2.findById(userId).get();
         if(user.getConnected()){
@@ -66,6 +66,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         serviceProviderRepository2.save(serviceProviderWithLowestId);
         return user;
     }
+    @Override
     public User disconnect(int userId) throws Exception {
         User user = userRepository2.findById(userId).get();
         if(!user.getConnected()){
@@ -76,6 +77,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         userRepository2.save(user);
         return user;
     }
+    @Override
     public User communicate(int senderId, int receiverId) throws Exception {
         User receiver = userRepository2.findById(receiverId).get();
         CountryName receiverCountryName = null;
