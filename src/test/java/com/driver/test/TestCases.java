@@ -544,12 +544,20 @@ public class TestCases {
         User user = new User();
         user.setId(1);
         user.setConnected(false);
+        user.setMaskedIp(null);
         Country originalCountry = new Country();
         originalCountry.setCountryName(CountryName.USA);
         originalCountry.setCode(CountryName.USA.toCode());
         user.setOriginalCountry(originalCountry);
+        Country country = new Country();
+        country.setCountryName(CountryName.IND);
+        country.setCode(CountryName.IND.toCode());
+        List<Country> countryList = new ArrayList<>();
+        countryList.add(country);
         user.setConnectionList(new ArrayList<>());
         user.setConnected(true);
+        user.setMaskedIp("001.1.1");
+
         when(userRepository2.findById(1)).thenReturn(java.util.Optional.of(user));
 
         User result = connectionService.disconnect(1);
