@@ -158,17 +158,19 @@ public class AirportController {
     public int countOfBookingsDoneByPassengerAllCombined(@PathVariable("passengerId")Integer passengerId){
 
         //Tell the count of flight bookings done by a passenger: This will tell the total count of flight bookings done by a passenger :
-
         HashMap<Integer,List<Integer>> passengerToFlightDb = new HashMap<>();
-
         //We have a list from passenger To flights database:-
+        int count = 0;
         for(Map.Entry<Integer,List<Integer>> entry: flightToPassengerDb.entrySet()){
 
             List<Integer> passengers  = entry.getValue();
-
-
+            for(Integer passenger : passengers){
+                if(passenger==passengerId){
+                    count++;
+                }
+            }
         }
-
+        return count;
     }
 
     @PostMapping("/add-flight")
