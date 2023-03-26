@@ -7,10 +7,12 @@ import com.driver.model.Flight;
 import com.driver.model.Passenger;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 public class AirportController {
@@ -46,6 +48,7 @@ public class AirportController {
 
             if(airport.getNoOfTerminals()>terminals){
                 ans = airport.getAirportName();
+                terminals = airport.getNoOfTerminals();
             }else if(airport.getNoOfTerminals()==terminals){
                 if(airport.getAirportName().compareTo(ans)<0){
                     ans = airport.getAirportName();
@@ -83,10 +86,13 @@ public class AirportController {
         //This includes both the people who have come for a flight and who have landed on an airport after their flight
 
         Airport airport = airportDb.get(airportName);
+        if(Objects.isNull(airport)){
+            return 0;
+        }
         City city = airport.getCity();
         int count = 0;
         for(Flight flight:flightDb.values()){
-            if(flight.getFlightDate().equals(date))
+            if(date.equals(flight.getFlightDate()))
             if(flight.getToCity().equals(city)||flight.getFromCity().equals(city)){
 
                 int flightId = flight.getFlightId();
@@ -119,7 +125,7 @@ public class AirportController {
         //else if you are able to book a ticket then return "SUCCESS"
 
 
-        if(flightToPassengerDb.get(flightId).size()<flightDb.get(flightId).getMaxCapacity()){
+        if(Objects.nonNull(flightToPassengerDb.get(flightId)) &&(flightToPassengerDb.get(flightId).size()<flightDb.get(flightId).getMaxCapacity())){
 
 
             List<Integer> passengers =  flightToPassengerDb.get(flightId);
@@ -131,6 +137,19 @@ public class AirportController {
             passengers.add(passengerId);
             flightToPassengerDb.put(flightId,passengers);
             return "SUCCESS";
+        }
+        else if(Objects.isNull(flightToPassengerDb.get(flightId))){
+            flightToPassengerDb.put(flightId,new ArrayList<>());
+            List<Integer> passengers =  flightToPassengerDb.get(flightId);
+
+            if(passengers.contains(passengerId)){
+                return "FAILURE";
+            }
+
+            passengers.add(passengerId);
+            flightToPassengerDb.put(flightId,passengers);
+            return "SUCCESS";
+
         }
         return "FAILURE";
     }
@@ -183,7 +202,7 @@ public class AirportController {
 
 
     @GetMapping("/get-aiportName-from-flight-takeoff/{flightId}")
-    public String getAirportNameFromFlightId(@PathVariable("flightId")String flightId){
+    public String getAirportNameFromFlightId(@PathVariable("flightId")Integer flightId){
 
         //We need to get the starting aiport from where the flight will be taking off
         //return null incase the flightId is invalid or you are not able to find the airportName
