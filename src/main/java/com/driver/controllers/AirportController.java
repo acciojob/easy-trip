@@ -106,7 +106,7 @@ public class AirportController {
     @GetMapping("/get-aiportName-from-flight-takeoff/{flightId}")
     public String getAirportNameFromFlightId(@PathVariable("flightId")Integer flightId){
 
-        //We need to get the starting aiport from where the flight will be taking off
+        //We need to get the starting airportName from where the flight will be taking off (Hint think of City variable if that can be of some use)
         //return null incase the flightId is invalid or you are not able to find the airportName
 
         return null;
@@ -116,7 +116,9 @@ public class AirportController {
     @GetMapping("/calculate-revenue-collected/{flightId}")
     public int calculateRevenueOfAFlight(@PathVariable("flightId")Integer flightId){
 
-        //Calculate the total revenue that a flight could ha
+        //Calculate the total revenue that a flight could have
+        //That is of all the passengers that have booked a flight till now what will be the revenue of the same
+
 
         return 0;
     }
@@ -126,6 +128,8 @@ public class AirportController {
     public String addPassenger(@RequestBody Passenger passenger){
 
         //Add a passenger to the database
+        //And return a "SUCCESS" message
+
        return null;
     }
 
