@@ -57,8 +57,8 @@ public class AirportController {
 
         //Calculation of flight prices is a function of number of people who have booked the flight already.
         //Price for any flight will be : 3000 + noOfPeopleWhoHaveAlreadyBooked*50
-        //Suppose if 2 people have booked the flight already : the price of flight will be 3000 + 2*50 = 3100
-        //This will not include the current person who is trying to book, he might also be jsut checking price
+        //Suppose if 2 people have booked the flight already : the price of flight for the third person will be 3000 + 2*50 = 3100
+        //This will not include the current person who is trying to book, he might also be just checking price
 
        return 0;
 
@@ -117,7 +117,8 @@ public class AirportController {
     public int calculateRevenueOfAFlight(@PathVariable("flightId")Integer flightId){
 
         //Calculate the total revenue that a flight could have
-        //That is of all the passengers that have booked a flight till now what will be the revenue of the same
+        //That is of all the passengers that have booked a flight till now and then calculate the revenue
+        //Revenue will also decrease if some passenger cancels the flight
 
 
         return 0;
@@ -128,7 +129,7 @@ public class AirportController {
     public String addPassenger(@RequestBody Passenger passenger){
 
         //Add a passenger to the database
-        //And return a "SUCCESS" message
+        //And return a "SUCCESS" message if the passenger has been added successfully.
 
        return null;
     }
